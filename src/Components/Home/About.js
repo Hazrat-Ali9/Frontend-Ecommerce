@@ -1,4 +1,4 @@
-//about
+//About
 import React from 'react';
 
 const About = () => {
