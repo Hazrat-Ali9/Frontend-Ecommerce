@@ -1,3 +1,4 @@
+// All Admin Products
 import React from 'react';
 import useProduct from '../../Hook/useProduct';
 import AdminDEtails from './AdminDEtails';
