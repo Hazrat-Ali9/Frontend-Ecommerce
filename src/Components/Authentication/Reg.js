@@ -1,3 +1,4 @@
+// Reg
 import React, { useState } from "react";
 import auth from "../../firebase.init";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
