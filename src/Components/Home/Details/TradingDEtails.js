@@ -1,3 +1,4 @@
+// Trending Data
 import React from 'react';
 
 const TradingDEtails = ({product}) => {
