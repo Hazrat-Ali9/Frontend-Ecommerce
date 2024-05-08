@@ -1,4 +1,3 @@
-// Favourite Details 
 import React from 'react';
 
 const FavouriteDetil = ({product}) => {

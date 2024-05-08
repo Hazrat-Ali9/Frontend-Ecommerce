@@ -2,16 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const AllDetails = ({product}) => {
-    const {img,name,price,_id} = product
+    const {image,name,price,_id} = product;
+    const imageURL = `http://localhost:7000/images/${image}`;
     return (
         <div>
           <Link to={`/details/${_id}`}>
           <div className=" w-full bg-base-100 mx-auto">
           <figure className="">
             <img
-              src={img}
+              src={imageURL}
               alt="Shoes"
-              className="h-60"
+              className="h-60 w-72"
             />
           </figure>
           <div className="mx-2 text-start">

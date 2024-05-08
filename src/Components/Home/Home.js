@@ -1,5 +1,4 @@
-// Home
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NewProduct from "../Product/NewProduct";
 import useProduct from "../../Hook/useProduct";
@@ -19,6 +18,82 @@ const Home = () => {
   const [products] = useProduct();
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const [discountedProducts, setDiscountedProducts] = useState([]);
+  const initialCountdown = { hours: 5, minutes: 0, seconds: 0 };
+  const [countdown, setCountdown] = useState(
+    JSON.parse(localStorage.getItem('countdown')) || initialCountdown
+  );
+
+  const [favorites,setFavorite]=useState([])
+  useEffect(()=>{
+    fetch('http://localhost:7000/favorite')
+    .then(res => res.json())
+    .then(data => setFavorite(data))
+  },[])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:7000/product');
+        const data = await response.json();
+
+        // Filter out only discounted products
+        const discounted = data.filter(product => product.discount);
+
+        // Shuffle the array
+        const shuffled = shuffleArray(discounted);
+
+        // Take the first 6 items
+        const selectedProducts = shuffled.slice(0, 6);
+
+        setDiscountedProducts(selectedProducts);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Function to shuffle an array
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  useEffect(() => {
+    let interval;
+    interval = setInterval(() => {
+      setCountdown(prevCountdown => {
+        const newCountdown = { ...prevCountdown };
+        if (newCountdown.seconds > 0) {
+          newCountdown.seconds -= 1;
+        } else {
+          if (newCountdown.minutes > 0) {
+            newCountdown.minutes -= 1;
+            newCountdown.seconds = 59;
+          } else {
+            if (newCountdown.hours > 0) {
+              newCountdown.hours -= 1;
+              newCountdown.minutes = 59;
+              newCountdown.seconds = 59;
+            } else {
+              clearInterval(interval);
+            }
+          }
+        }
+        localStorage.setItem('countdown', JSON.stringify(newCountdown));
+        return newCountdown;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchProductsByDiscount = async (discountPercentage) => {
     try {
@@ -77,7 +152,6 @@ const Home = () => {
         </div>
       </Link>
         
-        
         <div className="card w-28 h-44">
           <figure>
             <img
@@ -92,7 +166,7 @@ const Home = () => {
             </h2>
           </div>
         </div>
-        {/* <div className="card w-28 h-44">
+        <div className="card w-28 h-44">
           <figure>
             <img
               className="w-20 h-20 rounded-full"
@@ -105,16 +179,16 @@ const Home = () => {
               ভ্যারিফাইড প্রোডাক্ট
             </h2>
           </div>
-        </div> */}
+        </div>
         <div className="card w-28 h-44">
-          {/* <figure>
+          <figure>
             <img
               className="w-16 h-16 rounded-full"
               src="https://cdn-icons-png.flaticon.com/256/8471/8471732.png"
               alt="Shoes"
             />
-          </figure> */}
-          {/* <div className="card-body">
+          </figure>
+          <div className="card-body">
             <h2 className="font-semibold text-sm  mx-auto">সকল ক্যাটাগরি</h2>
           </div>
         </div>
@@ -128,7 +202,7 @@ const Home = () => {
           </figure>
           <div className="card-body">
             <h2 className=" font-semibold text-sm  mx-auto">ভেন্ডর সার্চ</h2>
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -173,19 +247,22 @@ const Home = () => {
 
       <div className="flex justify-between items-center mt-5 px-5 bg-red-500 h-16">
         <h1 className="text-xl font-bold text-white">Flash Sale</h1>
-        <h1 className="text-md font-normal text-white">hour min sec</h1>
+        <h1 className="text-md font-normal text-white">{countdown.hours}h {countdown.minutes}m {countdown.seconds}s</h1>
         <a className="text-xl font-bold text-white" href="">
           See More
         </a>
       </div>
       <div className="bg-orange-500 h-72">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 px-5">
-        {products
-          .filter((product) => product.type === "mostProduct")
-          .slice(0, 7)
-          .map((product) => (
-            <FlashDEtails key={product._id} product={product} />
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 px-5">
+          {
+            discountedProducts.map((product)=>(
+              <FlashDEtails
+              key={product._id}
+              product ={product}
+              />
+            ))
+          }
+          
         </div>
       </div>
       <div className="flex justify-between items-center mt-10 px-5">
@@ -260,8 +337,8 @@ const Home = () => {
           </div>
           <div className="lg:w-3/5">
             <div className="container grid grid-cols-3 md:grid-cols-6 px-5">
-              <a href="">
-                <div className="card w-28 h-44">
+              <Link to="/category/থ্রি-পিস">
+              <div className="card w-28 h-44">
                   <figure>
                     <img
                       className="w-20 h-20 rounded-full"
@@ -273,8 +350,9 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">থ্রি-পিস</h2>
                   </div>
                 </div>
-              </a>
-              <Link to="/category/accessories">
+              </Link>
+              
+              <Link to="/category/Mobile Accessories">
                 <div className="card w-28 h-44">
                     <figure>
                         <img
@@ -290,8 +368,8 @@ const Home = () => {
                     </div>
                 </div>
             </Link>
-              <a href="">
-                <div className="card w-28 h-44">
+            <Link to="/category/চশমা">
+            <div className="card w-28 h-44">
                   <figure>
                     <img
                       className="w-16 h-16 rounded-full"
@@ -303,8 +381,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">চশমা</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+            </Link>
+               
+             
+                <Link to="/category/ঘড়ি">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -317,9 +397,11 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">ঘড়ি</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
-                <div className="card w-28 h-44">
+                </Link>
+                
+             
+             <Link to="/category/স্মার্ট ফোন">
+             <div className="card w-28 h-44">
                   <figure>
                     <img
                       className="w-16 h-16 rounded-full"
@@ -333,9 +415,9 @@ const Home = () => {
                     </h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
-                <div className="card w-28 h-44">
+             </Link>  
+             <Link to="/category/টি-শার্ট">
+             <div className="card w-28 h-44">
                   <figure>
                     <img
                       className="w-16 h-16 rounded-full"
@@ -347,9 +429,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">টি-শার্ট</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
-                <div className="card w-28 h-44">
+             </Link>
+                
+            <Link to="/category/জুতা">
+            <div className="card w-28 h-44">
                   <figure>
                     <img
                       className="w-16 h-16 rounded-full"
@@ -361,8 +444,9 @@ const Home = () => {
                     <h2 className=" font-semibold text-sm  mx-auto">জুতা</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+            </Link>
+                
+                <Link to="/category/শাড়ি">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -375,8 +459,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">শাড়ি</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+                </Link>
+                
+             
+                <Link to="/category/শার্ট">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -389,8 +475,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">শার্ট</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+                </Link>
+                
+           
+                <Link to="/category/ল্যাপটপ">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -403,8 +491,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">ল্যাপটপ</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+                </Link>
+                
+             
+                <Link to="/category/পেন্ট">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -417,8 +507,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">পেন্ট</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+                </Link>
+                
+             
+                <Link to="/category/ইলেকট্রনিক্স">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -433,9 +525,9 @@ const Home = () => {
                     </h2>
                   </div>
                 </div>
-              </a>
-
-              <a href="">
+                </Link>
+               
+                <Link to="/category/কিডস">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -448,9 +540,9 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">কিডস</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
-                {" "}
+                </Link>
+                
+                <Link to="/category/ডেস্কটপ">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -463,8 +555,10 @@ const Home = () => {
                     <h2 className="font-semibold text-sm  mx-auto">ডেস্কটপ</h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+                </Link>
+                
+             
+                <Link to="/category/কসমেটিক্স">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -479,8 +573,10 @@ const Home = () => {
                     </h2>
                   </div>
                 </div>
-              </a>
-              <a href="">
+                </Link>
+               
+             
+                <Link to="/category/গিফট">
                 <div className="card w-28 h-44">
                   <figure>
                     <img
@@ -493,7 +589,9 @@ const Home = () => {
                     <h2 className=" font-semibold text-sm  mx-auto">গিফট</h2>
                   </div>
                 </div>
-              </a>
+                </Link>
+                
+            
             </div>
           </div>
         </div>
@@ -511,11 +609,11 @@ const Home = () => {
         </a></Link>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 mt-14 px-5">
-        {products
-          .filter((product) => product.type === "favoriteProduct")
+        {favorites
+          .filter((favorite) => favorite.type === "favoriteProduct")
           .slice(0, 7)
-          .map((product) => (
-            <FavDetails key={product._id} product={product} />
+          .map((favorite) => (
+            <FavDetails key={favorite._id} favorite={favorite} />
           ))}
       </div>
       {/* <div className="flex justify-between items-center mt-5 px-5">

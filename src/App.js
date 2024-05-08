@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import SideBar from "./Components/Home/SideBar";
 import Home from "./Components/Home/Home";
 import Condition from "./Components/Home/Condition";
 import Nav from "./Components/Home/Nav";
@@ -38,12 +37,23 @@ import MyProduct from "./Components/Role/MyProduct";
 import Discount from "./Components/Product/Discount";
 import AllAdminProduct from "./Components/Admin/AllAdminProduct";
 import AdminUpdate from "./Components/Admin/AdminUpdate";
+import Favorite from "./Components/Favorite/Favorite";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import CountDown from "./Components/Favorite/CountDown";
+import Reg from "./Components/Authentication/Reg";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [startCountdown, setStartCountdown] = useState(false);
+
+  const handleStartCountdown = () => {
+    setStartCountdown(prevStartCountdown => !prevStartCountdown); // Toggle countdown start
+  };
 
   return (
     <div>
+       
       <Router>
         <Nav loggedInUser={loggedInUser} />
         <div className="flex flex-col lg:flex-row bg-white max-w-screen-2xl mx-auto">
@@ -174,17 +184,15 @@ function App() {
           </div>
           <main className="min-h-screen w-full max-w-screen-2xl mx-auto lg:border-l lg:w-5/6">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home startCountdown={startCountdown}/>} />
               <Route path="/all" element={<AllProduct />} />
               <Route path="/condition" element={<Condition />} />
               <Route path="/about" element={<About />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/contract" element={<Contract />} />
-              <Route
-                path="/login"
-                element={<Login setLoggedInUser={setLoggedInUser} />}
-              />
+              <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/reg" element={<Reg />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/vendor" element={<Vendor />} />
               <Route path="/user" element={<User />} />
@@ -199,25 +207,27 @@ function App() {
               <Route path="/search" element={<Search />} />
               <Route path="/details/:id" element={<AllDetails />} />
               <Route path="/more/:id" element={<MoreDetails />} />
-              <Route path="/approved" element={<Approved />} />
+              <Route path="/approved" element={<Approved onStart={handleStartCountdown}/>} />
               <Route path="/adminAll" element={<AllAdminProduct />} />
               <Route path="/adminUpdate/:id" element={<AdminUpdate />} />
               <Route path="/myOrder" element={<MyOrder />} />
               <Route path="/myRole" element={<MyRole />} />
               <Route path="/update/:id" element={<Update />} />
               <Route path="/order/:id" element={<Order />} />
+              <Route path="/favorites/" element={<Favorite />} />
               <Route path="/role" element={<Role />} />
               <Route path="/discount" element={<Discount />} />
               <Route path="/roles" element={<Roles/>} />
               <Route path="/myProduct" element={<MyProduct/>} />
-              <Route path="/allrole" element={<AllRoles/>} />
               <Route path="/category/:name" element={<Category />} />
+              <Route path="/count" element={<CountDown/>} />
             </Routes>
           </main>
         </div>
-
+        <ToastContainer />
         <Footer />
       </Router>
+      
     </div>
   );
 }

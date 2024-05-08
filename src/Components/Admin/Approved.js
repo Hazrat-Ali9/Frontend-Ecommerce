@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Approved = () => {
+const Approved = ({ onStart }) => {
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  const handleStart = () => {
+    onStart(true);
+    navigate("/");
+  };
 
   useEffect(() => {
     fetchPendingProducts();
@@ -53,6 +58,7 @@ const Approved = () => {
             return product;
           })
         );
+        navigate("/all") // Navigate to the desired location
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -248,12 +254,12 @@ const Approved = () => {
       ))}
 
       <h1 className="text-xl font-bold text-center mt-5">Pending Products</h1>
+      <div className="container grid grid-cols-1 md:grid-cols-3 mx-auto gap-10">
       {products.map((product) => (
-        <div key={product._id} className="container grid grid-cols-1 md:grid-cols-3 mx-auto px-5 mt-10">
-          <div
-            
-            class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-          >
+        <div
+          key={product._id}
+        >
+          <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="flex flex-col items-center pb-10">
               <img
                 class="w-48 h-48 mt-5 shadow-lg"
@@ -290,7 +296,9 @@ const Approved = () => {
           </div>
         </div>
       ))}
-
+      </div>
+      
+      <button onClick={handleStart}>Start Countdown</button>
       {/* <ul>
         {products.map((product) => (
           <li key={product._id}>

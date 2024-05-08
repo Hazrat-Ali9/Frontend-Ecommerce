@@ -45,7 +45,7 @@ const Role = () => {
       .then((result) => {
         console.log(result);
         setSubmitting(false);
-        navigate("/");
+        navigate("/myRole");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -95,6 +95,13 @@ const Role = () => {
               <label className="text-gray-800 font-semibold block my-3 text-md">
                 Role
               </label>
+              <select>
+              <option disabled selected>
+               Select Your ROle
+              </option>
+              <option>vendor</option> 
+              <option>affiliate</option>
+              </select>
               <input
                 type="text"
                 className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"

@@ -1,4 +1,3 @@
-// Stg
 import React from 'react';
 import NewDetails from './Details/NewDetails';
 import useProduct from '../../Hook/useProduct';

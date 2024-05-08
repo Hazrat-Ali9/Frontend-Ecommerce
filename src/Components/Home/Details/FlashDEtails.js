@@ -1,35 +1,30 @@
 import React from 'react';
 
 const FlashDEtails = ({product}) => {
-    const {img,name,price} = product
+    const {image,name,price,discount} = product;
+    const imageURL = `http://localhost:7000/images/${image}`;
     return (
-        <div>
-            <div className=" w-full bg-base-100 mx-auto mt-5">
-            <figure className="">
-              <img
-                src={img}
-                alt="Shoes"
-                className="h-40"
-              />
-            </figure>
-            <div className="mx-2 text-start">
-              <h2 className="card-title">{name}</h2>
-              <div className="flex justify-between">
-                <p className="text-md font-semibold">$ {price}</p>
-                <p className="text-md font-semibold">$ 230</p>
-              </div>
-              <div className="mt-2">
-                <dl>
-                  <dd className="flex items-center mb-3">
-                    <div className="w-full bg-yellow-400 rounded h-2.5 dark:bg-yellow-400 me-2">
-                      <div className="bg-yellow-400"></div>
-                    </div>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
+     <div>
+      <div class="relative  rounded-lg border border-gray-100 bg-white shadow-md">
+  <a class="relative mx-3 mt-3 flex h-40  overflow-hidden" href="/">
+    <img class="object-cover w-44" src={imageURL} alt={name} />
+    <span class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">{discount.discountPercentage}% OFF</span>
+  </a>
+  <div class="mt-4 px-5">
+    <a href="/">
+      <h5 class="text-md tracking-tight text-slate-900">{name}</h5>
+    </a>
+   
+      <p>
+        <span class="text-xl text-center font-bold text-slate-900">${price}</span>
+      </p>
+  
+   
+  </div>
+</div>
+
+     </div>
+    
     );
 };
 

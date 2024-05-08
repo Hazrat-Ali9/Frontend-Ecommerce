@@ -1,4 +1,3 @@
-//All Details
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -21,36 +20,16 @@ const AllDetails = () => {
       <div className="grid max-w-screen-lg gap-8 row-gap-5 md:row-gap-8 sm:mx-auto lg:grid-cols-2">
         <div className="transition duration-300 transform bg-white rounded shadow-sm hover:-translate-y-1 hover:shadow md:text-center">
           <div className="relative">
-          <img
-                className="object-cover w-72 h-72"
-                src={service.images && service.images[0]}
-                alt=""
-              />
+              {service.image && <img className="object-cover w-72 h-72" src={`http://localhost:7000/images/${service.image}`} alt="Product" />}
           </div>
         </div>
         <div className="transition duration-300 transform bg-white rounded shadow-sm hover:-translate-y-1 hover:shadow md:text-center">
           <div className="relative">
             <div className="grid grid-cols-4 md:grid-cols-4 gap-5">
-            <img
-              className="object-cover h-28 w-32"
-              src={service.img}
-              alt=""
-            />
-            <img
-              className="object-cover h-28 w-32"
-              src={service.img}
-              alt=""
-            />
-            <img
-              className="object-cover h-28 w-32"
-              src={service.img}
-              alt=""
-            />
-            <img
-              className="object-cover h-28 w-32"
-              src={service.img}
-              alt=""
-            />
+            {service.image && <img className="object-cover h-28 w-32"src={`http://localhost:7000/images/${service.image}`} alt="Product" />}
+            {service.image && <img className="object-cover h-28 w-32"src={`http://localhost:7000/images/${service.image}`} alt="Product" />}
+            {service.image && <img className="object-cover h-28 w-32"src={`http://localhost:7000/images/${service.image}`} alt="Product" />}
+            {service.image && <img className="object-cover h-28 w-32"src={`http://localhost:7000/images/${service.image}`} alt="Product" />}
             </div>
             <div className="flex justify-between px-3 mt-5">
             <h1 className="text-2xl font-bold text-red-500 ">{service.name}</h1>

@@ -27,7 +27,7 @@ const [user] = useAuthState(auth);
     formData.append('district', district);
     formData.append('role', role);       
     formData.append('status', "pending");
-    // Append each image separately
+  
     if (image) {
       formData.append('images', image);
     }
@@ -41,8 +41,7 @@ const [user] = useAuthState(auth);
           'Content-Type': 'multipart/form-data'
         }
       });
-    
-        navigate("/allrole")
+      navigate("/allrole")
       console.log('Product added successfully');
     } catch (error) {
       console.error('Error adding product:', error);
@@ -62,16 +61,21 @@ const [user] = useAuthState(auth);
               className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
               
             />
-            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
-              Role
-            </label>
-            <input
-              type="text"
-              value={role} onChange={(e) => setRole(e.target.value)}
-              placeholder="Input Price"
-              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-             
-            />
+            <div>
+              <label className="text-gray-800 font-semibold block my-3 text-md">
+                Role
+              </label>
+              <select
+  name='role'
+  value={role} onChange={(e) => setRole(e.target.value)}
+>
+              <option>
+               Select Your Role
+              </option>
+              <option value="vendor">vendor</option> 
+              <option value="affiliate">affiliate</option>
+              </select>
+            </div>
             <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
               email
             </label>

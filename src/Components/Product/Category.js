@@ -1,6 +1,6 @@
-//catagory
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import AllDetails from '../Home/Details/AllDetails';
 
 const Category = () => {
     const { name } = useParams();
@@ -20,18 +20,16 @@ const Category = () => {
       fetchProducts();
     }, [name])
     return (
-        <div>
-      <h2>Products in Category: {name}</h2>
-      <ul>
-        {products.map(product => (
-          <li key={product.id}>
-            <img src={product.img} alt={product.name} />
-            <p>{product.productName}</p>
-            <p>{product.details}</p>
-            <p>{product.price}</p>
-          </li>
+        <div className='mx-10'>
+      <h2 className='text-center font-black mt-5 text-2xl'>Products in Category: {name}</h2>
+      <div  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-14 px-5">
+      {products.map(product => (
+          <AllDetails
+          key={product._id}
+          product={product}
+          />
         ))}
-      </ul>
+      </div>
     </div>
     );
 };

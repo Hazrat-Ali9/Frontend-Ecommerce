@@ -1,4 +1,3 @@
-// New Product Detils
 import React from 'react';
 
 const NewDetails = ({product}) => {

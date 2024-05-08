@@ -1,6 +1,4 @@
-// all product
 import React, { useEffect, useState } from 'react';
-import useProduct from '../../Hook/useProduct';
 import AllDetails from '../Home/Details/AllDetails';
 
 const AllProduct = () => {

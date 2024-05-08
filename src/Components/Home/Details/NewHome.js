@@ -1,13 +1,14 @@
 import React from 'react';
 
 const NewHome = ({product}) => {
-    const {name,img,price}=product
+    const {name,image,price}=product;
+    const imageURL = `http://localhost:7000/images/${image}`;
     return (
         <div>
            <div className=" w-full bg-base-100 mx-auto">
           <figure className="">
             <img
-              src={img}
+              src={imageURL}
               alt="Shoes"
               className="h-40"
             />
