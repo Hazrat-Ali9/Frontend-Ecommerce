@@ -1,4 +1,4 @@
-
+// Register
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import React from "react";
 import auth from '../../firebase.init';
