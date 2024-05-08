@@ -1,3 +1,4 @@
+// Fav Deatils
 import React from 'react';
 
 const FavDetails = ({favorite}) => {
