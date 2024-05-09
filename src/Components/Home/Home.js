@@ -151,8 +151,8 @@ const Home = () => {
           </div>
         </div>
       </Link>
-        
-        <div className="card w-28 h-44">
+      <Link to="/favorites">
+      <div className="card w-28 h-44">
           <figure>
             <img
               className="w-24 h-24 rounded-full"
@@ -166,6 +166,9 @@ const Home = () => {
             </h2>
           </div>
         </div>
+
+        </Link>  
+        
         <div className="card w-28 h-44">
           <figure>
             <img
