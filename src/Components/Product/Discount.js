@@ -50,3 +50,5 @@ const Discount = () => {
     );
 };
 export default Discount;
+
+// Discount
