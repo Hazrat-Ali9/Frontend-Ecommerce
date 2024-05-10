@@ -23,3 +23,5 @@ const NewDetails = ({product}) => {
 };
 
 export default NewDetails;
+
+// New Details
