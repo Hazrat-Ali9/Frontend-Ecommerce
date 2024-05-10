@@ -31,3 +31,4 @@ const MyProductDetails = ({ post }) => {
 };
 
 export default MyProductDetails;
+// My Product Details
