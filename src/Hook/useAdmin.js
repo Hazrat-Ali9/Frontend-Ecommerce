@@ -24,3 +24,5 @@ const useAdmin = user => {
 }
 
 export default useAdmin;
+
+// Use Admin
