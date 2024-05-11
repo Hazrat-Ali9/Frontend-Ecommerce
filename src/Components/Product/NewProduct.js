@@ -25,3 +25,5 @@ const NewProduct = () => {
 };
 
 export default NewProduct;
+
+// New Product
