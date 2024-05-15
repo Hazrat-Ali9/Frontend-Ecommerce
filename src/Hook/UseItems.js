@@ -16,7 +16,7 @@ const UseItems = (id) => {
           console.error("Error fetching items:", error);
         }
       };
-  
+  // error fetch
       fetchItems();
     }, [id]);
   
