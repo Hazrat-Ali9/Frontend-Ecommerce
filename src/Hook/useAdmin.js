@@ -3,6 +3,7 @@ const useAdmin = user => {
     const [admin, setAdmin] = useState(false);
     const [adminLoading, setAdminLoading] = useState(true);
     useEffect( () =>{
+        // email verification
         const email = user?.email;
         if(email){
             fetch(`http://localhost:7000/admin/${email}`, {
