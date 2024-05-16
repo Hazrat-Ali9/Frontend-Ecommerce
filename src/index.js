@@ -14,7 +14,7 @@ root.render(
   </React.StrictMode>
 </QueryClientProvider>
   
- 
+ // Query Client 
   
 );
 
