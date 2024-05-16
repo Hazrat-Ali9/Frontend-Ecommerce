@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const useProduct =()=>{
-    const [products,setProducts] =useState([])
+    const [products,setProducts] =useState([]) // Usestate Call
     useEffect(()=>{
         const url = `http://localhost:7000/product`
         fetch(url)
