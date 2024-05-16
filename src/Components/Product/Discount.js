@@ -5,7 +5,7 @@ const Discount = () => {
   const location = useLocation();
   const { products } = location.state || {};
  
-  
+  // Discount product
   return (
     <div className='mx-10'>
       <h2>Discounted Products</h2>
