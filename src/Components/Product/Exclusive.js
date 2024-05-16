@@ -4,7 +4,7 @@ import ExclusiveDetails from './Details/ExclusiveDetails';
 
 const Exclusive = () => {
     const [products] = useProduct();
-
+// Exclusive Product
   return (
     <div className="mx-5">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 gap-y-6">
