@@ -20,4 +20,4 @@ const Stg = () => {
 
 export default Stg;
 
-// Stg
+// Stg product
