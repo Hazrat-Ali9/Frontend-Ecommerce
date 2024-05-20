@@ -26,4 +26,4 @@ const NewProduct = () => {
 
 export default NewProduct;
 
-// New Product
+// New Product Item
