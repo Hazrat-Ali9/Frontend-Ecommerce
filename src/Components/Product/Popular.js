@@ -19,4 +19,4 @@ const Popular = () => {
 };
 
 export default Popular;
-// Popular
+// Popular Product
